@@ -1,0 +1,290 @@
+{
+    "tags": [],
+    "is_archived": false,
+    "updated_at": "2021-08-24T06:18:00.183Z",
+    "is_favorite": false,
+    "user": {
+        "auth_type": "password",
+        "is_disabled": false,
+        "updated_at": "2021-08-24T07:07:43.327Z",
+        "profile_image_url": "https://www.gravatar.com/avatar/e71aa995f11e429587dfa849152e1cb0?s=40&d=identicon",
+        "is_invitation_pending": false,
+        "groups": [
+            1,
+            2
+        ],
+        "id": 1,
+        "name": "sam",
+        "created_at": "2021-08-20T02:34:19.386Z",
+        "disabled_at": null,
+        "is_email_verified": true,
+        "active_at": "2021-08-24T07:07:27Z",
+        "email": "samlin266118@gmail.com"
+    },
+    "layout": [],
+    "is_draft": true,
+    "id": 9,
+    "can_edit": true,
+    "user_id": 1,
+    "name": "template",
+    "created_at": "2021-08-24T06:18:00.183Z",
+    "slug": "template",
+    "version": 1,
+    "widgets": [
+        {
+            "text": "taiwan",
+            "created_at": "2021-08-24T06:30:20.415Z",
+            "updated_at": "2021-08-24T06:30:24.814Z",
+            "options": {
+                "position": {
+                    "autoHeight": false,
+                    "sizeX": 3,
+                    "sizeY": 3,
+                    "maxSizeY": 1000,
+                    "maxSizeX": 6,
+                    "minSizeY": 1,
+                    "minSizeX": 1,
+                    "col": 0,
+                    "row": 0
+                },
+                "isHidden": false,
+                "parameterMappings": {}
+            },
+            "dashboard_id": 9,
+            "width": 1,
+            "id": 14
+        },
+        {
+            "visualization": {
+                "description": "",
+                "created_at": "2021-08-20T03:06:02.974Z",
+                "updated_at": "2021-08-24T07:00:51.199Z",
+                "id": 2,
+                "query": {
+                    "user": {
+                        "auth_type": "password",
+                        "is_disabled": false,
+                        "updated_at": "2021-08-24T07:07:43.327Z",
+                        "profile_image_url": "https://www.gravatar.com/avatar/e71aa995f11e429587dfa849152e1cb0?s=40&d=identicon",
+                        "is_invitation_pending": false,
+                        "groups": [
+                            1,
+                            2
+                        ],
+                        "id": 1,
+                        "name": "sam",
+                        "created_at": "2021-08-20T02:34:19.386Z",
+                        "disabled_at": null,
+                        "is_email_verified": true,
+                        "active_at": "2021-08-24T07:07:27Z",
+                        "email": "samlin266118@gmail.com"
+                    },
+                    "created_at": "2021-08-20T03:05:46.377Z",
+                    "latest_query_data_id": null,
+                    "schedule": null,
+                    "description": null,
+                    "tags": [],
+                    "updated_at": "2021-08-24T07:02:47.319Z",
+                    "last_modified_by": {
+                        "auth_type": "password",
+                        "is_disabled": false,
+                        "updated_at": "2021-08-24T07:07:43.327Z",
+                        "profile_image_url": "https://www.gravatar.com/avatar/e71aa995f11e429587dfa849152e1cb0?s=40&d=identicon",
+                        "is_invitation_pending": false,
+                        "groups": [
+                            1,
+                            2
+                        ],
+                        "id": 1,
+                        "name": "sam",
+                        "created_at": "2021-08-20T02:34:19.386Z",
+                        "disabled_at": null,
+                        "is_email_verified": true,
+                        "active_at": "2021-08-24T07:07:27Z",
+                        "email": "samlin266118@gmail.com"
+                    },
+                    "options": {
+                        "parameters": [
+                            {
+                                "name": "country",
+                                "title": "country",
+                                "global": false,
+                                "value": "Japan",
+                                "enumOptions": "Japan\nTaiwan\nHong Kong\nUnited States",
+                                "parentQueryId": 1,
+                                "queryId": 1,
+                                "type": "enum",
+                                "locals": []
+                            }
+                        ]
+                    },
+                    "is_safe": true,
+                    "version": 1,
+                    "query_hash": "d1898bf5bc73085114ef05e6b0e79a39",
+                    "is_archived": false,
+                    "query": "SELECT `tzDate` AS `__timestamp`,\n       sum(`DAU`) AS `DIU`,\n       `operationRegionGroup`\nFROM `MatomoDataSourceForKPI`.`EngagementUser_All`\nWHERE `tzDate` >= CAST('2021-05-20' AS DATE)\n  AND `engagementType` = 'Engagement'\n  AND `Period` = 'Daily'\n  AND `operationRegionGroup` = '{{ country }}'\nGROUP BY `__timestamp`, operationRegionGroup\nORDER BY `DIU` DESC\nLIMIT 10000;",
+                    "api_key": "kH5qg9TQ4YjELLsJMUHvewLOXpxwOQdfzPZUnNwP",
+                    "is_draft": false,
+                    "id": 1,
+                    "data_source_id": 1,
+                    "name": "DAU"
+                },
+                "type": "CHART",
+                "options": {
+                    "showDataLabels": false,
+                    "direction": {
+                        "type": "counterclockwise"
+                    },
+                    "missingValuesAsZero": true,
+                    "error_y": {
+                        "visible": true,
+                        "type": "data"
+                    },
+                    "numberFormat": "0,0[.]00000",
+                    "yAxis": [
+                        {
+                            "type": "linear"
+                        },
+                        {
+                            "type": "linear",
+                            "opposite": true
+                        }
+                    ],
+                    "series": {
+                        "stacking": null,
+                        "error_y": {
+                            "visible": true,
+                            "type": "data"
+                        }
+                    },
+                    "globalSeriesType": "line",
+                    "percentFormat": "0[.]00%",
+                    "sortX": true,
+                    "seriesOptions": {
+                        "Macau": {
+                            "zIndex": 10,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "Singapore": {
+                            "zIndex": 6,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "Philippines": {
+                            "zIndex": 5,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "Indonesia": {
+                            "zIndex": 8,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "United States": {
+                            "zIndex": 4,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "Malaysia": {
+                            "zIndex": 7,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "China": {
+                            "zIndex": 9,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "Japan": {
+                            "zIndex": 0,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "Taiwan": {
+                            "zIndex": 1,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "Hong Kong": {
+                            "zIndex": 2,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "MENA": {
+                            "zIndex": 11,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        },
+                        "RoW": {
+                            "zIndex": 3,
+                            "index": 0,
+                            "type": "line",
+                            "yAxis": 0
+                        }
+                    },
+                    "valuesOptions": {},
+                    "xAxis": {
+                        "labels": {
+                            "enabled": true
+                        },
+                        "type": "-"
+                    },
+                    "dateTimeFormat": "DD/MM/YY HH:mm",
+                    "columnMapping": {
+                        "__timestamp": "x",
+                        "operationRegionGroup": "series",
+                        "DIU": "y"
+                    },
+                    "textFormat": "",
+                    "customCode": "// Available variables are x, ys, element, and Plotly\n// Type console.log(x, ys); for more info about x and ys\n// To plot your graph call Plotly.plot(element, ...)\n// Plotly examples and docs: https://plot.ly/javascript/",
+                    "legend": {
+                        "enabled": true
+                    }
+                },
+                "name": "Chart"
+            },
+            "text": "",
+            "created_at": "2021-08-24T06:18:07.224Z",
+            "updated_at": "2021-08-24T06:30:24.811Z",
+            "options": {
+                "parameterMappings": {
+                    "country": {
+                        "type": "static-value",
+                        "mapTo": "country",
+                        "name": "country",
+                        "value": "Taiwan",
+                        "title": ""
+                    }
+                },
+                "isHidden": false,
+                "position": {
+                    "autoHeight": false,
+                    "sizeX": 3,
+                    "sizeY": 8,
+                    "maxSizeY": 1000,
+                    "maxSizeX": 6,
+                    "minSizeY": 5,
+                    "minSizeX": 1,
+                    "col": 0,
+                    "row": 3
+                }
+            },
+            "dashboard_id": 9,
+            "width": 1,
+            "id": 11
+        }
+    ],
+    "dashboard_filters_enabled": false
+}
