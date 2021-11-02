@@ -85,6 +85,7 @@ def create_taiwan_stock_margin_purchase_short_sale_sql():
             `ShortSaleLimit` BIGINT NOT NULL COMMENT '融券限制',
             `OffsetLoanAndShort` BIGINT DEFAULT NULL COMMENT '資券互抵',
             `date` DATE NOT NULL COMMENT '日期',
+            `Note` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT 'Note',
             PRIMARY KEY(`stock_id`, `date`)
         ) PARTITION BY KEY(`stock_id`) PARTITIONS 10;
     """
