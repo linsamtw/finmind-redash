@@ -179,6 +179,7 @@ def commit(
 
 def upload_data2mysql(table, stock_id_list):
     api = DataLoader()
+    # api.login_by_token(api_token='token')
     mysql_conn = get_mysql_financialdata_conn()
     for stock_id in stock_id_list:
         if table == "taiwan_stock_holding_shares_per":
@@ -188,7 +189,7 @@ def upload_data2mysql(table, stock_id_list):
                 end_date="2021-11-01",
             )
         elif table == "taiwan_stock_price":
-            df = api.taiwan_stock_price(
+            df = api.taiwan_stock_daily(
                 stock_id=stock_id,
                 start_date="2000-01-01",
                 end_date="2021-11-01",
