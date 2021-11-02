@@ -37,14 +37,14 @@ download-taiwan-stock-info:
 	python3 upload_data2mysql.py taiwan_stock_info
 
 download-taiwan-stock-price:
-	python3 upload_data2mysql.py taiwan_stock_price
+	python3 upload_data2mysql.py taiwan_stock_price 2330 2615 2603 2609
 
 download-taiwan-stock-institutional-investors:
-	python3 upload_data2mysql.py taiwan_stock_institutional_investors
+	python3 upload_data2mysql.py taiwan_stock_institutional_investors 2330 2615 2603 2609
 
 download-taiwan-stock-margin-purchase-short_sale:
-	python3 upload_data2mysql.py taiwan_stock_margin_purchase_short_sale
+	python3 upload_data2mysql.py taiwan_stock_margin_purchase_short_sale 2330 2615 2603 2609
 
 download-taiwan-stock-holding-shares-per:
-	python3 upload_data2mysql.py taiwan_stock_holding_shares_per
+	python3 upload_data2mysql.py taiwan_stock_holding_shares_per 2330 2615 2603 2609
 

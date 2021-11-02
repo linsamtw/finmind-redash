@@ -193,6 +193,18 @@ def upload_data2mysql(table, stock_id_list):
                 start_date="2000-01-01",
                 end_date="2021-11-01",
             )
+        elif table == "taiwan_stock_margin_purchase_short_sale":
+            df = api.finmind.taiwan_stock_margin_purchase_short_sale(
+                stock_id=stock_id,
+                start_date="2000-01-01",
+                end_date="2021-11-01",
+            )
+        elif table == "taiwan_stock_institutional_investors":
+            df = api.finmind.taiwan_stock_institutional_investors(
+                stock_id=stock_id,
+                start_date="2000-01-01",
+                end_date="2021-11-01",
+            )
         df_update2mysql(
             df=df,
             table=table,
