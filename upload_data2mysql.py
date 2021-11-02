@@ -8,6 +8,7 @@ from sqlalchemy import (
     engine,
 )
 from tqdm import tqdm
+import pymysql
 
 import wget
 
@@ -107,42 +108,90 @@ def create_taiwan_stock_holding_shares_per_sql():
 
 
 def create_table(table: str):
-    mysql_conn = (
-        get_mysql_financialdata_conn()
-    )
+    mysql_conn = get_mysql_financialdata_conn()
     sql = eval(f"create_{table}_sql()")
     try:
-        logger.info(
-            f"create table {table}"
-        )
+        logger.info(f"create table {table}")
         mysql_conn.execute(sql)
     except:
-        logger.info(
-            f"{table} already exists"
-        )
+        logger.info(f"{table} already exists")
 
 
-def download_data(table: str):
+def download_data(table):
     logger.info("download data")
-    if f"{table}.csv" in os.listdir(
-        "."
-    ):
+    if f"{table}.csv" in os.listdir("."):
         logger.info(f"already download")
     else:
-        url = f"https://github.com/FinMind/FinMindBook/releases/download/data/{table}.csv"
-        wget.download(
-            url, f"{table}.csv"
+        url = (
+            f"https://github.com/FinMind/FinMindBook/releases/download/data/{table}.csv"
         )
-        logger.info(
-            "download data complete"
+        wget.download(url, f"{table}.csv")
+        logger.info("download data complete")
+
+
+def build_update_sql(colname, value):
+    update_sql = ",".join(
+        [
+            ' `{}` = "{}" '.format(colname[i], str(value[i]))
+            for i in range(len(colname))
+            if str(value[i])
+        ]
+    )
+    return update_sql
+
+
+def build_df_update_sql(table, df):
+    logger.info("build_df_update_sql")
+    df_columns = list(df.columns)
+    sql_list = []
+    for i in range(len(df)):
+        temp = list(df.iloc[i])
+        value = [pymysql.converters.escape_string(str(v)) for v in temp]
+        sub_df_columns = [df_columns[j] for j in range(len(temp))]
+        update_sql = build_update_sql(sub_df_columns, value)
+        sql = """INSERT INTO `{}`({})VALUES ({}) ON DUPLICATE KEY UPDATE {}
+            """.format(
+            table,
+            "`{}`".format("`,`".join(sub_df_columns)),
+            '"{}"'.format('","'.join(value)),
+            update_sql,
         )
+        sql_list.append(sql)
+    return sql_list
+
+
+def df_update2mysql(df, table, mysql_conn):
+    sql = build_df_update_sql(table, df)
+    commit(sql=sql, mysql_conn=mysql_conn)
+
+
+def commit(
+    sql,
+    mysql_conn,
+):
+    logger.info("commit")
+    try:
+        trans = mysql_conn.begin()
+        if isinstance(sql, list):
+            for s in sql:
+                try:
+                    mysql_conn.execution_options(autocommit=False).execute(s)
+                except Exception as e:
+                    logger.info(e)
+                    logger.info(s)
+                    break
+
+        elif isinstance(sql, str):
+            mysql_conn.execution_options(autocommit=False).execute(sql)
+        trans.commit()
+    except Exception as e:
+        trans.rollback()
+        logger.info(e)
 
 
 def upload_data2mysql(table: str):
     chunk_size = 100000
-    mysql_conn = (
-        get_mysql_financialdata_conn()
-    )
+    mysql_conn = get_mysql_financialdata_conn()
     logger.info("load data")
     logger.info("upload to mysql")
     reader = pd.read_csv(
@@ -150,13 +199,7 @@ def upload_data2mysql(table: str):
         chunksize=chunk_size,
     )
     for df_chunk in tqdm(reader):
-        df_chunk.to_sql(
-            name=table,
-            con=mysql_conn,
-            if_exists="append",
-            index=False,
-        )
-
+        df_update2mysql(df=df_chunk, table=table, mysql_conn=mysql_conn)
 
 
 def main(table: str):
