@@ -177,8 +177,6 @@ services:
       - target: 3306
         published: 3306
         mode: host
-    cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
     environment:
         MYSQL_DATABASE: mydb
         MYSQL_USER: user
@@ -200,7 +198,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: test
       MYSQL_ROOT_PASSWORD: test
-      PMA_HOST: redash-mysql
       UPLOAD_LIMIT: 512M
     depends_on:
     - redash-mysql
