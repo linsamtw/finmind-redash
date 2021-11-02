@@ -15,3 +15,7 @@
 
 #### package
     pip install sqlalchemy==1.4.20 pymysql==1.0.2 loguru==0.5.3 pandas==1.1.5 requests==2.25.1 tqdm wget
+
+
+#### 明新科大
+    https://docs.google.com/presentation/d/1WrWKvJ3e0JLluLK2z80vbagl3EijOK1mlSotZzMa3GI/edit?usp=sharing
