@@ -200,7 +200,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: test
       MYSQL_ROOT_PASSWORD: test
-      UPLOAD_LIMIT: 512M
+      UPLOAD_LIMIT: 4096M
     depends_on:
     - redash-mysql
     networks:
