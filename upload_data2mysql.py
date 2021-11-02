@@ -39,7 +39,7 @@ def create_taiwan_stock_price_sql():
         CREATE TABLE `taiwan_stock_price` (
             `stock_id` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
             `Trading_turnover` bigint NOT NULL,
-            `Trade_Volume` int NOT NULL,
+            `Trading_Volume` int NOT NULL,
             `Trading_money` bigint NOT NULL,
             `open` float NOT NULL,
             `max` float NOT NULL,
