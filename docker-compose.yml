@@ -15,7 +15,7 @@ services:
     # redash 使用 5000 port
     ports:
       - target: 5000
-        published: 5000
+        published: 5555
         mode: host
     # 相關的環境變數，包含
     environment:
@@ -171,12 +171,47 @@ services:
     networks:
         - my_network
 
+  redash-mysql:
+    image: mysql:latest
+    ports:
+      - target: 3306
+        published: 3306
+        mode: host
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    environment:
+        MYSQL_DATABASE: mydb
+        MYSQL_USER: user
+        MYSQL_PASSWORD: test
+        MYSQL_ROOT_PASSWORD: test
+        MAX_CONNECTIONS: 100000
+    volumes:
+        - mysql-redash:/var/lib/mysql
+    networks:
+        - my_network
+
+  redash-phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links: 
+        - redash-mysql:db
+    ports:
+        - 8000:80
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: test
+      PMA_HOST: redash-mysql
+      UPLOAD_LIMIT: 512M
+    depends_on:
+    - redash-mysql
+    networks:
+        - my_network
+
 networks:
   my_network:
-    external: true
 
 volumes:
   postgres:
-
+  mysql-redash:
   redis-redash:
 
