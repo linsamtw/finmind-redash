@@ -12,3 +12,6 @@
 
 #### 關閉
     make down
+
+#### package
+    pip install sqlalchemy==1.4.20 pymysql==1.0.2 loguru==0.5.3 pandas==1.1.5 requests==2.25.1 tqdm wget
