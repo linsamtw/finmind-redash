@@ -216,7 +216,7 @@ def main(table, stock_id_list):
     create_table(
         table=table,
     )
-    upload_data2mysql(stock_id_list)
+    upload_data2mysql(table, stock_id_list)
 
 
 if __name__ == "__main__":
