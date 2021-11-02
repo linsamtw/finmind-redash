@@ -180,7 +180,7 @@ services:
         published: 3306
         mode: host
     environment:
-        MYSQL_DATABASE: mydb
+        MYSQL_DATABASE: FinancialData
         MYSQL_USER: user
         MYSQL_PASSWORD: test
         MYSQL_ROOT_PASSWORD: test
