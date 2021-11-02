@@ -10,7 +10,7 @@ from sqlalchemy import (
 from tqdm import tqdm
 import pymysql
 
-import wget
+from FinMind.data import DataLoader
 
 
 def get_mysql_financialdata_conn() -> engine.base.Connection:
@@ -117,18 +117,6 @@ def create_table(table: str):
         logger.info(f"{table} already exists")
 
 
-def download_data(table):
-    logger.info("download data")
-    if f"{table}.csv" in os.listdir("."):
-        logger.info(f"already download")
-    else:
-        url = (
-            f"https://github.com/FinMind/FinMindBook/releases/download/data/{table}.csv"
-        )
-        wget.download(url, f"{table}.csv")
-        logger.info("download data complete")
-
-
 def build_update_sql(colname, value):
     update_sql = ",".join(
         [
@@ -189,29 +177,37 @@ def commit(
         logger.info(e)
 
 
-def upload_data2mysql(table: str):
-    chunk_size = 100000
+def upload_data2mysql(table, stock_id_list):
+    api = DataLoader()
     mysql_conn = get_mysql_financialdata_conn()
-    logger.info("load data")
-    logger.info("upload to mysql")
-    reader = pd.read_csv(
-        f"{table}.csv",
-        chunksize=chunk_size,
-    )
-    for df_chunk in tqdm(reader):
-        df_update2mysql(df=df_chunk, table=table, mysql_conn=mysql_conn)
+    for stock_id in stock_id_list:
+        if table == "taiwan_stock_holding_shares_per":
+            df = api.finmind.taiwan_stock_holding_shares_per(
+                stock_id=stock_id,
+                start_date="2000-01-01",
+                end_date="2021-11-01",
+            )
+        elif table == "taiwan_stock_price":
+            df = api.finmind.taiwan_stock_price(
+                stock_id=stock_id,
+                start_date="2000-01-01",
+                end_date="2021-11-01",
+            )
+        df_update2mysql(
+            df=df,
+            table=table,
+            mysql_conn=mysql_conn,
+        )
 
 
-def main(table: str):
+def main(table, stock_id_list):
     create_table(
         table=table,
     )
-    download_data(
-        table=table,
-    )
-    upload_data2mysql(table=table)
+    upload_data2mysql(stock_id_list)
 
 
 if __name__ == "__main__":
     table = sys.argv[1]
-    main(table)
+    stock_id_list = sys.argv[2:]
+    main(table, stock_id_list)
