@@ -182,25 +182,25 @@ def upload_data2mysql(table, stock_id_list):
     mysql_conn = get_mysql_financialdata_conn()
     for stock_id in stock_id_list:
         if table == "taiwan_stock_holding_shares_per":
-            df = api.finmind.taiwan_stock_holding_shares_per(
+            df = api.taiwan_stock_holding_shares_per(
                 stock_id=stock_id,
                 start_date="2000-01-01",
                 end_date="2021-11-01",
             )
         elif table == "taiwan_stock_price":
-            df = api.finmind.taiwan_stock_price(
+            df = api.taiwan_stock_price(
                 stock_id=stock_id,
                 start_date="2000-01-01",
                 end_date="2021-11-01",
             )
         elif table == "taiwan_stock_margin_purchase_short_sale":
-            df = api.finmind.taiwan_stock_margin_purchase_short_sale(
+            df = api.taiwan_stock_margin_purchase_short_sale(
                 stock_id=stock_id,
                 start_date="2000-01-01",
                 end_date="2021-11-01",
             )
         elif table == "taiwan_stock_institutional_investors":
-            df = api.finmind.taiwan_stock_institutional_investors(
+            df = api.taiwan_stock_institutional_investors(
                 stock_id=stock_id,
                 start_date="2000-01-01",
                 end_date="2021-11-01",
