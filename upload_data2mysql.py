@@ -178,7 +178,7 @@ def commit(
         logger.info(e)
 
 
-def upload_data2mysql(table, stock_id_list):
+def upload_data2mysql(table, start_date, end_date, stock_id_list):
     api = DataLoader()
     # api.login_by_token(api_token='token')
     mysql_conn = get_mysql_financialdata_conn()
@@ -186,26 +186,26 @@ def upload_data2mysql(table, stock_id_list):
         if table == "taiwan_stock_holding_shares_per":
             df = api.taiwan_stock_holding_shares_per(
                 stock_id=stock_id,
-                start_date="2000-01-01",
-                end_date="2021-11-01",
+                start_date=start_date,
+                end_date=end_date,
             )
         elif table == "taiwan_stock_price":
             df = api.taiwan_stock_daily(
                 stock_id=stock_id,
-                start_date="2000-01-01",
-                end_date="2021-11-01",
+                start_date=start_date,
+                end_date=end_date,
             )
         elif table == "taiwan_stock_margin_purchase_short_sale":
             df = api.taiwan_stock_margin_purchase_short_sale(
                 stock_id=stock_id,
-                start_date="2000-01-01",
-                end_date="2021-11-01",
+                start_date=start_date,
+                end_date=end_date,
             )
         elif table == "taiwan_stock_institutional_investors":
             df = api.taiwan_stock_institutional_investors(
                 stock_id=stock_id,
-                start_date="2000-01-01",
-                end_date="2021-11-01",
+                start_date=start_date,
+                end_date=end_date,
             )
         df_update2mysql(
             df=df,
@@ -214,14 +214,16 @@ def upload_data2mysql(table, stock_id_list):
         )
 
 
-def main(table, stock_id_list):
+def main(table, start_date, end_date, stock_id_list):
     create_table(
         table=table,
     )
-    upload_data2mysql(table, stock_id_list)
+    upload_data2mysql(table, start_date, end_date, stock_id_list)
 
 
 if __name__ == "__main__":
     table = sys.argv[1]
-    stock_id_list = sys.argv[2:]
-    main(table, stock_id_list)
+    start_date = sys.argv[2]
+    end_date = sys.argv[3]
+    stock_id_list = sys.argv[4:]
+    main(table, start_date, end_date, stock_id_list)
